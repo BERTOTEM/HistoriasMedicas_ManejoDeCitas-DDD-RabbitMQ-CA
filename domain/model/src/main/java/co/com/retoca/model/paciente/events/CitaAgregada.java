@@ -10,12 +10,12 @@ public class CitaAgregada  extends DomainEvent {
     private String citaId;
     private String revisionDeCitaMedica;
 
-    public CitaAgregada(String type) {
-        super("mazo.julian.citaAgregada");
+    public CitaAgregada() {
+        super("mazo.julian.CitaAgregada");
     }
 
     public CitaAgregada(String citaId, String revisionDeCitaMedica) {
-        super("mazo.julian.citaAgregada");
+        super("mazo.julian.CitaAgregada");
         this.citaId = citaId;
         this.revisionDeCitaMedica = revisionDeCitaMedica;
     }

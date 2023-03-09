@@ -27,11 +27,12 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
 
     @Override
     public Flux<DomainEvent> apply(Mono<AgregarCitaCommand> agregarCitaCommandMono) {
-        return agregarCitaCommandMono.flatMapMany(agregarCitaCommand ->repository.findById(agregarCitaCommand.getPacienteId())
+        return agregarCitaCommandMono.flatMapMany
+                (agregarCitaCommand ->repository.findById(agregarCitaCommand.getPacienteId())
                 .collectList()
                 .flatMapIterable(events ->{
                     Paciente paciente =Paciente.from(PacienteId.of(agregarCitaCommand.getPacienteId()),events);
-                    paciente.AgregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
+                    paciente.agregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
                             new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()));
                     return paciente.getUncommittedChanges();
                 }).map(event ->{

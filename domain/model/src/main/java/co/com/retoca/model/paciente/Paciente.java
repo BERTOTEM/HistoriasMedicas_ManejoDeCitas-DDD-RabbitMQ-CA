@@ -16,8 +16,7 @@ public class Paciente extends AggregateRoot<PacienteId> {
     protected Nombre nombre;
     protected Telefono telefono;
     protected Edad edad;
-
-    protected  Cita cita;
+    protected  List<Cita> cita;
 
     public Paciente(PacienteId pacienteId, Correo correo, Nombre nombre, Telefono telefono, Edad edad) {
         super(pacienteId);
@@ -37,37 +36,14 @@ public class Paciente extends AggregateRoot<PacienteId> {
 
 
 
-
-    public Correo getCorreo() {
-        return correo;
-    }
-
-    public Nombre getNombre() {
-        return nombre;
-    }
-
-    public Telefono getTelefono() {
-        return telefono;
-    }
-
-    public Edad getEdad() {
-        return edad;
-    }
-
-    public PacienteId getPacienteId() {
-        return pacienteId;
-    }
-
-
-    public  void AgregarCita(CitaId citaId,RevisionDeCitaMedica revisionDeCitaMedica){
+    public  void agregarCita(CitaId citaId,RevisionDeCitaMedica revisionDeCitaMedica){
         Objects.requireNonNull(citaId);
         Objects.requireNonNull(revisionDeCitaMedica);
         appendChange(new CitaAgregada(citaId.value(), revisionDeCitaMedica.value())).apply();
 
     }
-    public Cita getCita() {
-        return cita;
-    }
+
+
 }
 
 

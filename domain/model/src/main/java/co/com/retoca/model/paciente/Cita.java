@@ -13,7 +13,4 @@ public class Cita  extends Entity<CitaId> {
         this.revisionDeCitaMedica = revisionDeCitaMedica;
     }
 
-    public RevisionDeCitaMedica getRevisionDeCitaMedica() {
-        return revisionDeCitaMedica;
-    }
 }

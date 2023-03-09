@@ -7,6 +7,8 @@ import co.com.retoca.model.paciente.events.PacienteEliminado;
 import co.com.retoca.model.paciente.generic.EventChange;
 import co.com.retoca.model.paciente.values.*;
 
+import java.util.ArrayList;
+
 public class PacienteChange extends EventChange {
 
     public PacienteChange(Paciente paciente){
@@ -15,13 +17,12 @@ public class PacienteChange extends EventChange {
             paciente.nombre=new Nombre(event.getNombre());
             paciente.telefono=new Telefono(event.getTelefono());
             paciente.edad=new Edad(event.getEdad());
-            paciente.cita= paciente.getCita();
+            paciente.cita= new ArrayList<>();
         });
         apply((CitaAgregada event)->{
             Cita cita =new Cita(CitaId.of(event.getCitaId()),
                     new RevisionDeCitaMedica(event.getRevisionDeCitaMedica()));
-            paciente.cita=cita;
-
+            paciente.cita.add(cita);
         });
         apply((PacienteActualizado event)->{
             paciente.pacienteId=event.getPacienteId();
