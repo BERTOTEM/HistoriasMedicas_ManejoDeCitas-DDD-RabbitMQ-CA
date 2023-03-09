@@ -1,4 +1,7 @@
-package co.com.alpha.bcb.serializer;
+package co.com.retoca.serializer;
+
+import org.springframework.context.annotation.Configuration;
+
 
 public interface JSONMapper {
     String writeToJson(Object object);

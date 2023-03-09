@@ -1,4 +1,4 @@
-package co.com.alpha.bcb.serializer;
+package co.com.retoca.serializer;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -6,9 +6,10 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.logging.Logger;
-
+@Configuration
 public class JSONMapperImpl implements JSONMapper {
 
     Logger logger = Logger.getLogger("Json-mapper-logger");

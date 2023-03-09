@@ -1,33 +1,44 @@
-package co.com.reto.model.paciente.events;
+package co.com.retoca.model.paciente.events;
 
-import co.com.reto.model.paciente.generic.DomainEvent;
-import co.com.reto.model.paciente.values.Correo;
-import co.com.reto.model.paciente.values.InformacionPaciente;
-import co.com.reto.model.paciente.values.PacienteId;
+
+import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.paciente.values.*;
 
 public class PacienteActualizado extends DomainEvent {
     private PacienteId pacienteId;
-
-    private InformacionPaciente informacionPaciente;
     private Correo correo;
+    private Nombre nombre;
+    private Telefono telefono;
+    private Edad edad;
+
 
     public PacienteActualizado() {
-        super("mazo.julian.PacienteActualizado");
+        super("mazo.julian.pacienteActualizado");
     }
 
-    public PacienteActualizado(PacienteId pacienteId, InformacionPaciente informacionPaciente, Correo correo) {
-        super("mazo.julian.PacienteActualizado");
+    public PacienteActualizado(PacienteId pacienteId, Correo correo, Nombre nombre, Telefono telefono, Edad edad) {
+        super("mazo.julian.pacienteActualizado");
         this.pacienteId = pacienteId;
-        this.informacionPaciente = informacionPaciente;
         this.correo = correo;
+        this.nombre = nombre;
+        this.telefono = telefono;
+        this.edad = edad;
     }
 
     public PacienteId getPacienteId() {
         return pacienteId;
     }
 
-    public InformacionPaciente getInformacionPaciente() {
-        return informacionPaciente;
+    public Nombre getNombre() {
+        return nombre;
+    }
+
+    public Telefono getTelefono() {
+        return telefono;
+    }
+
+    public Edad getEdad() {
+        return edad;
     }
 
     public Correo getCorreo() {

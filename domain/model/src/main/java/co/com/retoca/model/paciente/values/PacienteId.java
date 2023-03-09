@@ -1,6 +1,7 @@
-package co.com.reto.model.paciente.values;
+package co.com.retoca.model.paciente.values;
 
-import co.com.reto.model.paciente.generic.Identity;
+
+import co.com.retoca.model.paciente.generic.Identity;
 
 public class PacienteId extends Identity {
 

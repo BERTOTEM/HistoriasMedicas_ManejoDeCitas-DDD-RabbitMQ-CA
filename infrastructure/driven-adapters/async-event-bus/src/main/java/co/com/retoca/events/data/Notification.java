@@ -1,6 +1,7 @@
-package co.com.alpha.bcb.asynceventbus.data;
+package co.com.retoca.events.data;
 
-import co.com.alpha.bcb.serializer.JSONMapperImpl;
+
+import co.com.retoca.serializer.JSONMapperImpl;
 
 import java.time.Instant;
 

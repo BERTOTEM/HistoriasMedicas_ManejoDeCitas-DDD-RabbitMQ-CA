@@ -1,4 +1,4 @@
-package co.com.alpha.bcb.usecase.generic;
+package co.com.retoca.usecase.generic;
 
 import java.io.Serializable;
 import java.time.Instant;

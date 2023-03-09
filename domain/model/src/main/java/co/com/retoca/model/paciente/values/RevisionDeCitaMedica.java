@@ -1,38 +1,17 @@
-package co.com.reto.model.paciente.values;
+package co.com.retoca.model.paciente.values;
 
-import co.com.reto.model.paciente.generic.ValueObject;
 
-public class RevisionDeCitaMedica implements ValueObject<RevisionDeCitaMedica.InfoR> {
-    private final String observaciones;
-    private final String fecha;
+import co.com.retoca.model.paciente.generic.ValueObject;
 
-    public RevisionDeCitaMedica(String observaciones, String fecha) {
-        this.observaciones = observaciones;
-        this.fecha = fecha;
-    }
-    public static RevisionDeCitaMedica of(String observaciones, String fecha) {
-        return new RevisionDeCitaMedica(observaciones, fecha);
+public class RevisionDeCitaMedica implements ValueObject<String> {
+     private String revisionDeCitaMedica;
+
+    public RevisionDeCitaMedica(String revisionDeCitaMedica) {
+        this.revisionDeCitaMedica = revisionDeCitaMedica;
     }
 
-    public RevisionDeCitaMedica.InfoR value(){
-        return  new RevisionDeCitaMedica.InfoR() {
-            @Override
-            public String observaciones() {
-                return observaciones;
-            }
-
-            @Override
-            public String fecha() {
-                return fecha;
-            }
-        };
+    @Override
+    public String value() {
+        return revisionDeCitaMedica;
     }
-
-    public interface InfoR{
-        String observaciones();
-        String fecha();
-
-    }
-
-
 }

@@ -1,4 +1,4 @@
-package co.com.reto.model.paciente.generic;
+package co.com.retoca.model.paciente.generic;
 
 import java.util.Objects;
 import java.util.UUID;

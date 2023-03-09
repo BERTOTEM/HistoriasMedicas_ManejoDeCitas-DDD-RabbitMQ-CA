@@ -1,6 +1,8 @@
-package co.com.reto.model.paciente.values;
+package co.com.retoca.model.paciente.values;
 
-import co.com.reto.model.paciente.generic.ValueObject;
+
+
+import co.com.retoca.model.paciente.generic.ValueObject;
 
 import java.util.Objects;
 
@@ -15,4 +17,6 @@ public class Correo implements ValueObject<String> {
     public String value() {
         return correo;
     }
+
+
 }
