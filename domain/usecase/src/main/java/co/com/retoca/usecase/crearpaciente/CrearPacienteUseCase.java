@@ -22,19 +22,26 @@ public class CrearPacienteUseCase extends UseCaseForCommand<CrearPacienteCommand
 
     @Override
     public Flux<DomainEvent> apply(Mono<CrearPacienteCommand> crearPacienteCommandMono) {
-        return crearPacienteCommandMono.flatMapIterable(crearPacienteCommand -> {
-            Paciente paciente=new Paciente(PacienteId.of(crearPacienteCommand.getPacienteId())
-                    ,new Correo(crearPacienteCommand.getCorreo()),
-                    new Nombre(crearPacienteCommand.getNombre()),
-                    new Telefono(crearPacienteCommand.getTelefono()),
-                    new Edad(crearPacienteCommand.getEdad()));
-            return paciente.getUncommittedChanges();
-
-        }).flatMap(event ->{
-            return repository.saveEvent(event);
-        }).map(event ->{
-            bus.publish(event);
-            return  event;
-        });
-    }
+        return crearPacienteCommandMono.flatMapMany(crearPacienteCommand ->
+                repository.existsById(crearPacienteCommand.getPacienteId())
+                        .flatMapMany(exists -> {
+                            System.out.println(exists);
+                            if (exists) {
+                                return Mono.error(new RuntimeException("El paciente ya existe"));
+                            } else {
+                                Paciente paciente = new Paciente(
+                                        PacienteId.of(crearPacienteCommand.getPacienteId()),
+                                        new Correo(crearPacienteCommand.getCorreo()),
+                                        new Nombre(crearPacienteCommand.getNombre()),
+                                        new Telefono(crearPacienteCommand.getTelefono()),
+                                        new Edad(crearPacienteCommand.getEdad())
+                                );
+                                return Flux.fromIterable(paciente.getUncommittedChanges())
+                                        .flatMap(event -> repository.saveEvent(event))
+                                        .flatMap(domainEvent -> repository.save(domainEvent))
+                                        .doOnNext(event -> bus.publish(event));
+                            }
+                        }).onErrorResume(error ->Flux.empty())
+        );
+}
 }

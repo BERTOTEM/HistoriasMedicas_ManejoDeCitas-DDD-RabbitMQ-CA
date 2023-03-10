@@ -42,4 +42,14 @@ public class PacienteCreado  extends DomainEvent {
     public String getEdad() {
         return edad;
     }
+
+    @Override
+    public String toString() {
+        return "PacienteCreado{" +
+                "correo='" + correo + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", edad='" + edad + '\'' +
+                '}';
+    }
 }

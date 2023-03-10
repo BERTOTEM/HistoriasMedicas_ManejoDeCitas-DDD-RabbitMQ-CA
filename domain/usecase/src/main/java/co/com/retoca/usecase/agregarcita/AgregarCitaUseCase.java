@@ -3,9 +3,7 @@ package co.com.retoca.usecase.agregarcita;
 import co.com.retoca.model.paciente.Cita;
 import co.com.retoca.model.paciente.Paciente;
 import co.com.retoca.model.paciente.generic.DomainEvent;
-import co.com.retoca.model.paciente.values.CitaId;
-import co.com.retoca.model.paciente.values.PacienteId;
-import co.com.retoca.model.paciente.values.RevisionDeCitaMedica;
+import co.com.retoca.model.paciente.values.*;
 import co.com.retoca.usecase.generic.UseCaseForCommand;
 import co.com.retoca.usecase.generic.commands.AgregarCitaCommand;
 import co.com.retoca.usecase.generic.gateways.DomainEventRepository;
@@ -33,13 +31,17 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
                 .flatMapIterable(events ->{
                     Paciente paciente =Paciente.from(PacienteId.of(agregarCitaCommand.getPacienteId()),events);
                     paciente.agregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
-                            new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()));
+                            new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()),
+                            new Duracion(agregarCitaCommand.getDuracion()),
+                            new Hora(agregarCitaCommand.getHora()));
                     return paciente.getUncommittedChanges();
                 }).map(event ->{
                     bus.publish(event);
                     return event;
                 }).flatMap(event ->{
                     return repository.saveEvent(event);
-                }));
+                }).flatMap(event -> {
+                            return repository.save(event);
+                        }));
     }
 }

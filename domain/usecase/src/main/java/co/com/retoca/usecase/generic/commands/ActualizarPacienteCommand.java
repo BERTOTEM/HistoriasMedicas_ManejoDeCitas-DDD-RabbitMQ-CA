@@ -1,23 +1,19 @@
-package co.com.retoca.model.paciente.events;
+package co.com.retoca.usecase.generic.commands;
 
+import co.com.retoca.usecase.generic.Command;
 
-import co.com.retoca.model.paciente.generic.DomainEvent;
-import co.com.retoca.model.paciente.values.*;
+public class ActualizarPacienteCommand extends Command {
 
-public class PacienteActualizado extends DomainEvent {
     private String pacienteId;
     private String correo;
     private String nombre;
     private String telefono;
     private String edad;
 
-
-    public PacienteActualizado() {
-        super("mazo.julian.pacienteActualizado");
+    public ActualizarPacienteCommand() {
     }
 
-    public PacienteActualizado(String pacienteId, String correo, String nombre, String telefono, String edad) {
-        super("mazo.julian.pacienteActualizado");
+    public ActualizarPacienteCommand(String pacienteId, String correo, String nombre, String telefono, String edad) {
         this.pacienteId = pacienteId;
         this.correo = correo;
         this.nombre = nombre;

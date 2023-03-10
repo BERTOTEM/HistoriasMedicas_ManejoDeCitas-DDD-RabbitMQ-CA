@@ -1,5 +1,6 @@
 package co.com.retoca.mongo;
 
+import co.com.retoca.model.paciente.Paciente;
 import co.com.retoca.model.paciente.generic.DomainEvent;
 import co.com.retoca.mongo.data.StoredEvent;
 
@@ -37,6 +38,12 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
     }
 
     @Override
+    public Mono<Boolean> existsById(String aggregateId) {
+        var query = new Query(Criteria.where("aggregateRootId").is(aggregateId));
+        return template.exists(query, StoredEvent.class);
+    }
+
+    @Override
     public Mono<DomainEvent> saveEvent(DomainEvent event) {
         StoredEvent eventStored = new StoredEvent();
         eventStored.setAggregateRootId(event.aggregateRootId());
@@ -46,4 +53,11 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
         return template.save(eventStored)
                 .map(storeEvent -> storeEvent.deserializeEvent(eventSerializer));
     }
+
+    @Override
+    public Mono<DomainEvent> save(DomainEvent event) {
+        return template.save(event);
+    }
+
+
 }

@@ -2,13 +2,16 @@ package co.com.retoca.model.paciente;
 
 
 import co.com.retoca.model.paciente.events.CitaAgregada;
+import co.com.retoca.model.paciente.events.PacienteActualizado;
 import co.com.retoca.model.paciente.events.PacienteCreado;
+import co.com.retoca.model.paciente.events.PacienteEliminado;
 import co.com.retoca.model.paciente.generic.AggregateRoot;
 import co.com.retoca.model.paciente.generic.DomainEvent;
 import co.com.retoca.model.paciente.values.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Paciente extends AggregateRoot<PacienteId> {
     protected PacienteId pacienteId;
@@ -36,14 +39,48 @@ public class Paciente extends AggregateRoot<PacienteId> {
 
 
 
-    public  void agregarCita(CitaId citaId,RevisionDeCitaMedica revisionDeCitaMedica){
+    public  void agregarCita(CitaId citaId,RevisionDeCitaMedica revisionDeCitaMedica,Duracion duracion,Hora hora){
         Objects.requireNonNull(citaId);
         Objects.requireNonNull(revisionDeCitaMedica);
-        appendChange(new CitaAgregada(citaId.value(), revisionDeCitaMedica.value())).apply();
+        Objects.requireNonNull(duracion);
+        Objects.requireNonNull(hora);
+        appendChange(new CitaAgregada(citaId.value(),revisionDeCitaMedica.value(),duracion.value(),hora.value())).apply();
 
     }
 
+    public  void actualizarPaciente(PacienteId pacienteId, Correo correo, Nombre nombre, Telefono telefono, Edad edad){
+        Objects.requireNonNull(pacienteId);
+        Objects.requireNonNull(correo);
+        Objects.requireNonNull(nombre);
+        Objects.requireNonNull(telefono);
+        Objects.requireNonNull(edad);
+        appendChange(new PacienteActualizado(pacienteId.value(),correo.value(),nombre.value(),telefono.value(),edad.value())).apply();
+    }
 
+    public void eliminarPaciente(PacienteId pacienteId){
+        Objects.requireNonNull(pacienteId);
+        appendChange(new PacienteEliminado(pacienteId)).apply();
+    }
+
+    public PacienteId getPacienteId() {
+        return pacienteId;
+    }
+
+    public Correo getCorreo() {
+        return correo;
+    }
+
+    public Nombre getNombre() {
+        return nombre;
+    }
+
+    public Telefono getTelefono() {
+        return telefono;
+    }
+
+    public Edad getEdad() {
+        return edad;
+    }
 }
 
 

@@ -1,8 +1,10 @@
 package co.com.retoca.api;
 
 import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.usecase.actualizarpaciente.ActualizarPacienteUseCase;
 import co.com.retoca.usecase.agregarcita.AgregarCitaUseCase;
 import co.com.retoca.usecase.crearpaciente.CrearPacienteUseCase;
+import co.com.retoca.usecase.generic.commands.ActualizarPacienteCommand;
 import co.com.retoca.usecase.generic.commands.AgregarCitaCommand;
 import co.com.retoca.usecase.generic.commands.CrearPacienteCommand;
 import org.springframework.context.annotation.Bean;
@@ -12,8 +14,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.RouterFunction;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.POST;
-import static org.springframework.web.reactive.function.server.RequestPredicates.accept;
+import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
 
 @Configuration
@@ -37,6 +38,17 @@ public class RestController {
                 request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(agregarCitaUseCase
                                         .apply(request.bodyToMono(AgregarCitaCommand.class)),
+                                DomainEvent.class))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> actulizarPaciente(ActualizarPacienteUseCase actualizarPacienteUseCase){
+
+        return route(
+                PUT("/actualizar/paciente").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(actualizarPacienteUseCase
+                                        .apply(request.bodyToMono(ActualizarPacienteCommand.class)),
                                 DomainEvent.class))
         );
     }

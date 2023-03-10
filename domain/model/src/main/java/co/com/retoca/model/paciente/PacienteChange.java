@@ -21,18 +21,20 @@ public class PacienteChange extends EventChange {
         });
         apply((CitaAgregada event)->{
             Cita cita =new Cita(CitaId.of(event.getCitaId()),
-                    new RevisionDeCitaMedica(event.getRevisionDeCitaMedica()));
+                    new RevisionDeCitaMedica(event.getRevisionDeCitaMedica()),
+                    new Duracion(event.getDuracion()),
+                    new Hora(event.getHora()));
             paciente.cita.add(cita);
         });
         apply((PacienteActualizado event)->{
-            paciente.pacienteId=event.getPacienteId();
-            paciente.correo=new Correo(event.getCorreo().toString());
-            paciente.nombre=new Nombre(event.getNombre().toString());
-            paciente.telefono=new Telefono(event.getTelefono().toString());
-            paciente.edad=new Edad(event.getEdad().toString());
+            paciente.pacienteId=paciente.getPacienteId();
+            paciente.correo=paciente.getCorreo();
+            paciente.nombre=paciente.getNombre();
+            paciente.telefono=paciente.getTelefono();
+            paciente.edad=paciente.getEdad();
         });
        apply((PacienteEliminado event)->{
-           paciente.pacienteId=event.getPacienteId();
+
         });
 
     }
