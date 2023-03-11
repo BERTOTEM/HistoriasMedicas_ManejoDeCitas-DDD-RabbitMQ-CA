@@ -1,6 +1,6 @@
 package co.com.retoca.model.paciente.values;
 
-import co.com.retoca.model.paciente.generic.Identity;
+import co.com.retoca.model.generic.Identity;
 
 public class CitaId extends Identity {
 

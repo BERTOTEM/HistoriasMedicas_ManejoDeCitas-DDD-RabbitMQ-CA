@@ -1,13 +1,12 @@
 package co.com.retoca.mongo;
 
-import co.com.retoca.model.paciente.Paciente;
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.agenda.events.DiaAgregado;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.mongo.data.StoredEvent;
 
 import co.com.retoca.serializer.JSONMapper;
 import co.com.retoca.usecase.generic.gateways.DomainEventRepository;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -57,6 +56,13 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
     @Override
     public Mono<DomainEvent> save(DomainEvent event) {
         return template.save(event);
+    }
+
+    @Override
+    public Mono<Boolean> findByFecha(String diaId) {
+        var query = new Query(Criteria.where("diaId").is(diaId));
+        return template.exists(query, DiaAgregado.class);
+
     }
 
 

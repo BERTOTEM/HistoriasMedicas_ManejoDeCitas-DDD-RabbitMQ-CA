@@ -1,8 +1,7 @@
 package co.com.retoca.usecase.actualizarpaciente;
 
 import co.com.retoca.model.paciente.Paciente;
-import co.com.retoca.model.paciente.events.PacienteActualizado;
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.values.*;
 import co.com.retoca.usecase.generic.UseCaseForCommand;
 import co.com.retoca.usecase.generic.commands.ActualizarPacienteCommand;

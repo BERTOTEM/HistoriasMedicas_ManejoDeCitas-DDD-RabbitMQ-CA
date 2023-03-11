@@ -1,7 +1,7 @@
 package co.com.retoca.model.paciente.events;
 
 
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.values.PacienteId;
 
 ;

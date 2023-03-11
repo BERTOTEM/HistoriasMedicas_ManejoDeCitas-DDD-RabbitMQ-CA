@@ -1,7 +1,7 @@
 package co.com.retoca.usecase.generic;
 
 
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.DomainEvent;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

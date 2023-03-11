@@ -1,4 +1,4 @@
-package co.com.retoca.model.paciente.generic;
+package co.com.retoca.model.generic;
 
 
 public abstract class Entity<I extends Identity> {

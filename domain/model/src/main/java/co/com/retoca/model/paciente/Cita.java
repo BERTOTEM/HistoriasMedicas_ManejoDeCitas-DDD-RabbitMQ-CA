@@ -1,6 +1,6 @@
 package co.com.retoca.model.paciente;
 
-import co.com.retoca.model.paciente.generic.Entity;
+import co.com.retoca.model.generic.Entity;
 import co.com.retoca.model.paciente.values.CitaId;
 import co.com.retoca.model.paciente.values.Duracion;
 import co.com.retoca.model.paciente.values.Hora;

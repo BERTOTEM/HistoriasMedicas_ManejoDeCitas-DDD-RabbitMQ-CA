@@ -4,7 +4,7 @@ import co.com.retoca.model.paciente.events.CitaAgregada;
 import co.com.retoca.model.paciente.events.PacienteActualizado;
 import co.com.retoca.model.paciente.events.PacienteCreado;
 import co.com.retoca.model.paciente.events.PacienteEliminado;
-import co.com.retoca.model.paciente.generic.EventChange;
+import co.com.retoca.model.generic.EventChange;
 import co.com.retoca.model.paciente.values.*;
 
 import java.util.ArrayList;

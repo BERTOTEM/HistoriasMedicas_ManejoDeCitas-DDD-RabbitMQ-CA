@@ -1,8 +1,7 @@
 package co.com.retoca.model.paciente.events;
 
 
-import co.com.retoca.model.paciente.generic.DomainEvent;
-import co.com.retoca.model.paciente.values.*;
+import co.com.retoca.model.generic.DomainEvent;
 
 public class PacienteActualizado extends DomainEvent {
     private String pacienteId;

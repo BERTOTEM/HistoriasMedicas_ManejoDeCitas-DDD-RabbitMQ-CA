@@ -1,7 +1,7 @@
 package co.com.retoca.events;
 
 import co.com.retoca.events.data.Notification;
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.serializer.JSONMapper;
 import co.com.retoca.usecase.generic.gateways.EventBus;
 import org.slf4j.Logger;

@@ -1,14 +1,12 @@
 package co.com.retoca.usecase.agregarcita;
 
-import co.com.retoca.model.paciente.Cita;
 import co.com.retoca.model.paciente.Paciente;
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.values.*;
 import co.com.retoca.usecase.generic.UseCaseForCommand;
 import co.com.retoca.usecase.generic.commands.AgregarCitaCommand;
 import co.com.retoca.usecase.generic.gateways.DomainEventRepository;
 import co.com.retoca.usecase.generic.gateways.EventBus;
-import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -29,19 +27,21 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
                 (agregarCitaCommand ->repository.findById(agregarCitaCommand.getPacienteId())
                 .collectList()
                 .flatMapIterable(events ->{
+                    if (){
                     Paciente paciente =Paciente.from(PacienteId.of(agregarCitaCommand.getPacienteId()),events);
                     paciente.agregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
                             new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()),
                             new Duracion(agregarCitaCommand.getDuracion()),
                             new Hora(agregarCitaCommand.getHora()));
-                    return paciente.getUncommittedChanges();
-                }).map(event ->{
-                    bus.publish(event);
-                    return event;
-                }).flatMap(event ->{
-                    return repository.saveEvent(event);
-                }).flatMap(event -> {
-                            return repository.save(event);
-                        }));
+                    return Flux.fromIterable(paciente.getUncommittedChanges())
+                            .flatMap(event -> repository.saveEvent(event))
+                            .flatMap(domainEvent -> repository.save(domainEvent))
+                            .doOnNext(event -> bus.publish(event));
+
+                    }
+                    else{
+                        return Mono.error(new RuntimeException("hora no disponible"));
+                    }
+                }).onErrorResume(error ->Flux.empty()));
     }
 }

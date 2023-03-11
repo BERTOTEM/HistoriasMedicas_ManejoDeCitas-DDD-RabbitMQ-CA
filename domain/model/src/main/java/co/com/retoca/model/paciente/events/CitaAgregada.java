@@ -1,10 +1,6 @@
 package co.com.retoca.model.paciente.events;
 
-import co.com.retoca.model.paciente.generic.DomainEvent;
-import co.com.retoca.model.paciente.values.CitaId;
-import co.com.retoca.model.paciente.values.Duracion;
-import co.com.retoca.model.paciente.values.Hora;
-import co.com.retoca.model.paciente.values.RevisionDeCitaMedica;
+import co.com.retoca.model.generic.DomainEvent;
 
 public class CitaAgregada  extends DomainEvent {
 

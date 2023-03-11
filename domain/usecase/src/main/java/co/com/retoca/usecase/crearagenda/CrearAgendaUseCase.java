@@ -3,7 +3,8 @@ package co.com.retoca.usecase.crearagenda;
 import co.com.retoca.model.agenda.Agenda;
 import co.com.retoca.model.agenda.values.AgendaId;
 import co.com.retoca.model.agenda.values.Semana;
-import co.com.retoca.model.agenda.generic.DomainEvent;
+
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.usecase.generic.UseCaseForCommand;
 import co.com.retoca.usecase.generic.commands.CrearAgendaCommand;
 import co.com.retoca.usecase.generic.gateways.DomainEventRepository;
@@ -36,6 +37,6 @@ public class CrearAgendaUseCase extends UseCaseForCommand<CrearAgendaCommand> {
             return repository.saveEvent(event);
         }).flatMap(event -> {
             return repository.save(event);
-        }));
+        });
     }
 }

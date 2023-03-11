@@ -1,4 +1,4 @@
-package co.com.retoca.model.paciente.generic;
+package co.com.retoca.model.generic;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;

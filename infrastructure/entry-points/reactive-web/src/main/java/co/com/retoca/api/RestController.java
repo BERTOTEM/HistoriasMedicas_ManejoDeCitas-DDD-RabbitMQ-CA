@@ -1,12 +1,12 @@
 package co.com.retoca.api;
 
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.usecase.actualizarpaciente.ActualizarPacienteUseCase;
 import co.com.retoca.usecase.agregarcita.AgregarCitaUseCase;
+import co.com.retoca.usecase.agregardia.AgregarDiaUseCase;
+import co.com.retoca.usecase.crearagenda.CrearAgendaUseCase;
 import co.com.retoca.usecase.crearpaciente.CrearPacienteUseCase;
-import co.com.retoca.usecase.generic.commands.ActualizarPacienteCommand;
-import co.com.retoca.usecase.generic.commands.AgregarCitaCommand;
-import co.com.retoca.usecase.generic.commands.CrearPacienteCommand;
+import co.com.retoca.usecase.generic.commands.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -49,6 +49,30 @@ public class RestController {
                 request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(actualizarPacienteUseCase
                                         .apply(request.bodyToMono(ActualizarPacienteCommand.class)),
+                                DomainEvent.class))
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> crearAgenda(CrearAgendaUseCase crearAgendaUseCase){
+
+        return route(
+                POST("/create/agenda").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(crearAgendaUseCase
+                                        .apply(request.bodyToMono(CrearAgendaCommand.class)),
+                                DomainEvent.class))
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> AgregarDia(AgregarDiaUseCase agregarDiaUseCase){
+
+        return route(
+                POST("/create/dia").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(agregarDiaUseCase
+                                        .apply(request.bodyToMono(AgregarDiaCommand.class)),
                                 DomainEvent.class))
         );
     }

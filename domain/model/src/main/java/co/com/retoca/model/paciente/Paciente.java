@@ -5,13 +5,12 @@ import co.com.retoca.model.paciente.events.CitaAgregada;
 import co.com.retoca.model.paciente.events.PacienteActualizado;
 import co.com.retoca.model.paciente.events.PacienteCreado;
 import co.com.retoca.model.paciente.events.PacienteEliminado;
-import co.com.retoca.model.paciente.generic.AggregateRoot;
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.AggregateRoot;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.values.*;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Paciente extends AggregateRoot<PacienteId> {
     protected PacienteId pacienteId;

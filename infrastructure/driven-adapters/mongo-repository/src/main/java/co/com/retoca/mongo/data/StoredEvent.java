@@ -2,7 +2,7 @@ package co.com.retoca.mongo.data;
 
 
 
-import co.com.retoca.model.paciente.generic.DomainEvent;
+import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.serializer.JSONMapper;
 
 import java.util.Date;

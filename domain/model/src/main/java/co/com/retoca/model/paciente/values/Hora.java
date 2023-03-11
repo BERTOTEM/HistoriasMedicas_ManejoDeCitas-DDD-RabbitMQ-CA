@@ -1,6 +1,6 @@
 package co.com.retoca.model.paciente.values;
 
-import co.com.retoca.model.paciente.generic.ValueObject;
+import co.com.retoca.model.generic.ValueObject;
 
 public class Hora implements ValueObject<String> {
 
