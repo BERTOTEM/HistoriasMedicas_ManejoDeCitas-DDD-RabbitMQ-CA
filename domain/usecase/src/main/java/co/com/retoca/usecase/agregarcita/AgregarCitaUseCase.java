@@ -24,24 +24,28 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
     @Override
     public Flux<DomainEvent> apply(Mono<AgregarCitaCommand> agregarCitaCommandMono) {
         return agregarCitaCommandMono.flatMapMany
-                (agregarCitaCommand ->repository.findById(agregarCitaCommand.getPacienteId())
-                .collectList()
-                .flatMapIterable(events ->{
-                    if (){
-                    Paciente paciente =Paciente.from(PacienteId.of(agregarCitaCommand.getPacienteId()),events);
-                    paciente.agregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
-                            new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()),
-                            new Duracion(agregarCitaCommand.getDuracion()),
-                            new Hora(agregarCitaCommand.getHora()));
-                    return Flux.fromIterable(paciente.getUncommittedChanges())
-                            .flatMap(event -> repository.saveEvent(event))
-                            .flatMap(domainEvent -> repository.save(domainEvent))
-                            .doOnNext(event -> bus.publish(event));
-
-                    }
-                    else{
-                        return Mono.error(new RuntimeException("hora no disponible"));
-                    }
-                }).onErrorResume(error ->Flux.empty()));
+                (agregarCitaCommand -> {
+                    return repository.findById(agregarCitaCommand.getPacienteId())
+                            .collectList()
+                            .flatMapMany(events -> {
+                                return repository.esistsByFecha(agregarCitaCommand.getCitaId())
+                                        .flatMapMany(existe -> {
+                                            System.out.println(existe);
+                                            if (existe) {
+                                                Paciente paciente = Paciente.from(PacienteId.of(agregarCitaCommand.getPacienteId()), events);
+                                                paciente.agregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
+                                                        new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()),
+                                                        new Duracion(agregarCitaCommand.getDuracion()),
+                                                        new Hora(agregarCitaCommand.getHora()));
+                                                return Flux.fromIterable(paciente.getUncommittedChanges())
+                                                        .flatMap(event -> repository.saveEvent(event))
+                                                        .flatMap(domainEvent -> repository.save(domainEvent))
+                                                        .doOnNext(event -> bus.publish(event));
+                                            } else {
+                                                return Mono.error(new RuntimeException("hora no disponible"));
+                                            }
+                                        });
+                            }).onErrorResume(error -> Flux.empty());
+                });
     }
 }

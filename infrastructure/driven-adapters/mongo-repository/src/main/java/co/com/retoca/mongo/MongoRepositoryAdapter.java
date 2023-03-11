@@ -59,10 +59,15 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
     }
 
     @Override
-    public Mono<Boolean> findByFecha(String diaId) {
+    public Mono<Boolean> esistsByFecha(String diaId) {
         var query = new Query(Criteria.where("diaId").is(diaId));
-        return template.exists(query, DiaAgregado.class);
+        return template.exists(query, "diaAgregado");
 
+    }
+
+    @Override
+    public Mono<Boolean> findByFecha(String diaId) {
+        return null;
     }
 
 
