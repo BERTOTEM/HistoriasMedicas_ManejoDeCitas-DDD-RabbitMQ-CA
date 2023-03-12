@@ -10,12 +10,15 @@ import co.com.retoca.usecase.generic.gateways.DomainEventRepository;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
 import java.util.Date;
+
+import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
 @Repository
 public class MongoRepositoryAdapter implements DomainEventRepository{
@@ -62,12 +65,13 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
     public Mono<Boolean> esistsByFecha(String diaId) {
         var query = new Query(Criteria.where("diaId").is(diaId));
         return template.exists(query, "diaAgregado");
-
     }
 
     @Override
-    public Mono<Boolean> findByFecha(String diaId) {
-        return null;
+    public Mono<DomainEvent> findDyFecha(String id, String oldValue, String newValue) {
+        Query query = new Query(Criteria.where("diaId").is(id).and("disponibilidadHorarias").is(oldValue));
+        Update update = new Update().set("disponibilidadHorarias.$", newValue);
+        return template.findAndModify(query, update, options().returnNew(true), DomainEvent.class,"diaAgregado");
     }
 
 

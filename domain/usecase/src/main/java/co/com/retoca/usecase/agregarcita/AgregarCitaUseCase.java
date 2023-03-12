@@ -37,7 +37,11 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
                                                         new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()),
                                                         new Duracion(agregarCitaCommand.getDuracion()),
                                                         new Hora(agregarCitaCommand.getHora()));
-                                                return Flux.fromIterable(paciente.getUncommittedChanges())
+                                                String fecha = agregarCitaCommand.getCitaId();
+                                                String horaAnterior = agregarCitaCommand.getHora();
+                                                String horaNueva = agregarCitaCommand.getHora() +" Reservado por: "+ agregarCitaCommand.getPacienteId();
+                                                return repository.findDyFecha(fecha, horaAnterior, horaNueva)
+                                                        .thenMany(Flux.fromIterable(paciente.getUncommittedChanges()))
                                                         .flatMap(event -> repository.saveEvent(event))
                                                         .flatMap(domainEvent -> repository.save(domainEvent))
                                                         .doOnNext(event -> bus.publish(event));
@@ -45,7 +49,7 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
                                                 return Mono.error(new RuntimeException("hora no disponible"));
                                             }
                                         });
-                            }).onErrorResume(error -> Flux.empty());
+                            });
                 });
     }
 }

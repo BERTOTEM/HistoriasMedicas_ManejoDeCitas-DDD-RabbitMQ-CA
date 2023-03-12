@@ -30,4 +30,6 @@ public class Dia extends Entity<DiaId> {
                 "disponibilidadHorarias=" + disponibilidadHorarias +
                 '}';
     }
+
+
 }
