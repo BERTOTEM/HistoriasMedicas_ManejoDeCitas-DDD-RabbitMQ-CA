@@ -2,6 +2,7 @@ package co.com.retoca.mongo;
 
 import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.generic.DomainEvent;
+import co.com.retoca.model.paciente.events.CitaAgregada;
 import co.com.retoca.mongo.data.StoredEvent;
 
 import co.com.retoca.serializer.JSONMapper;
@@ -64,14 +65,22 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
     @Override
     public Mono<Boolean> esistsByFecha(String diaId) {
         var query = new Query(Criteria.where("diaId").is(diaId));
-        return template.exists(query, "diaAgregado");
+        return template.exists(query,"diaAgregado");
     }
 
     @Override
     public Mono<DomainEvent> findDyFecha(String id, String oldValue, String newValue) {
         Query query = new Query(Criteria.where("diaId").is(id).and("disponibilidadHorarias").is(oldValue));
         Update update = new Update().set("disponibilidadHorarias.$", newValue);
-        return template.findAndModify(query, update, options().returnNew(true), DomainEvent.class,"diaAgregado");
+        return template.findAndModify(query, update, options().returnNew(true),
+                DomainEvent.class,"diaAgregado");
+    }
+
+    @Override
+    public Flux<DomainEvent> HistorialPaciente(String aggregateRootId) {
+        var query = new Query(Criteria.where("aggregateRootId").is(aggregateRootId));
+        return template.find(query,StoredEvent.class).sort(Comparator.comparing(event -> event.getOccurredOn()))
+                .map(storeEvent -> storeEvent.deserializeEvent(eventSerializer));
     }
 
 

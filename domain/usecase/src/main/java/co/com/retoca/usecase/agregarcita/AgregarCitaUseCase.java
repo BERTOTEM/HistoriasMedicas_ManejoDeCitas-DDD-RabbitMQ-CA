@@ -10,7 +10,7 @@ import co.com.retoca.usecase.generic.gateways.EventBus;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
+public class AgregarCitaUseCase extends UseCaseForCommand<AgregarCitaCommand> {
 
     private final DomainEventRepository repository;
     private final EventBus bus;
@@ -39,7 +39,7 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
                                                         new Hora(agregarCitaCommand.getHora()));
                                                 String fecha = agregarCitaCommand.getCitaId();
                                                 String horaAnterior = agregarCitaCommand.getHora();
-                                                String horaNueva = agregarCitaCommand.getHora() +" Reservado por: "+ agregarCitaCommand.getPacienteId();
+                                                String horaNueva = agregarCitaCommand.getHora() + " Reservado por: " + agregarCitaCommand.getPacienteId();
                                                 return repository.findDyFecha(fecha, horaAnterior, horaNueva)
                                                         .thenMany(Flux.fromIterable(paciente.getUncommittedChanges()))
                                                         .flatMap(event -> repository.saveEvent(event))
@@ -48,7 +48,7 @@ public class AgregarCitaUseCase  extends UseCaseForCommand<AgregarCitaCommand> {
                                             } else {
                                                 return Mono.error(new RuntimeException("hora no disponible"));
                                             }
-                                        });
+                                        }).retry(2).onErrorResume(eroor -> Flux.empty());
                             });
                 });
     }

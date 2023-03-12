@@ -3,6 +3,7 @@ package co.com.retoca.usecase.generic.gateways;
 
 import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.generic.DomainEvent;
+import co.com.retoca.model.paciente.events.CitaAgregada;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -13,6 +14,8 @@ public interface DomainEventRepository {
     Mono<DomainEvent>save(DomainEvent event);
     Mono<Boolean>esistsByFecha(String diaId);
     Mono<DomainEvent> findDyFecha(String id, String oldValue, String newValue);
+
+    Flux<DomainEvent>HistorialPaciente(String aggregateRootId);
 
 
 }

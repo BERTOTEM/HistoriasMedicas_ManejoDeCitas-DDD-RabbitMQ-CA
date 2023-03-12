@@ -1,12 +1,15 @@
 package co.com.retoca.api;
 
 import co.com.retoca.model.generic.DomainEvent;
+import co.com.retoca.model.paciente.Paciente;
+import co.com.retoca.model.paciente.events.CitaAgregada;
 import co.com.retoca.usecase.actualizarpaciente.ActualizarPacienteUseCase;
 import co.com.retoca.usecase.agregarcita.AgregarCitaUseCase;
 import co.com.retoca.usecase.agregardia.AgregarDiaUseCase;
 import co.com.retoca.usecase.crearagenda.CrearAgendaUseCase;
 import co.com.retoca.usecase.crearpaciente.CrearPacienteUseCase;
 import co.com.retoca.usecase.generic.commands.*;
+import co.com.retoca.usecase.historialpaciente.HistorialPacienteUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -16,6 +19,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 
 import static org.springframework.web.reactive.function.server.RequestPredicates.*;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
+import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Configuration
 public class RestController {
@@ -73,6 +77,16 @@ public class RestController {
                 request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(agregarDiaUseCase
                                         .apply(request.bodyToMono(AgregarDiaCommand.class)),
+                                DomainEvent.class))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> obtenerHistorial(HistorialPacienteUseCase historialPacienteUseCase){
+
+        return route( GET("/historial/{aggregateRootId}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(historialPacienteUseCase
+                                        .apply(request.pathVariable("aggregateRootId")),
                                 DomainEvent.class))
         );
     }
