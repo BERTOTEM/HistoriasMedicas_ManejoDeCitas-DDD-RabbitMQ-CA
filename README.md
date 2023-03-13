@@ -48,3 +48,22 @@ Este módulo es el más externo de la arquitectura, es el encargado de ensamblar
 
 # Modelamiento Estrategico y Tactico
 https://app.diagrams.net/#G1Bk_sBeR1xxSRKNWdqDkcxZ6x1u0i56Oh
+
+# Consumo de API
+### Crear Un Paciente
+
+![image](https://user-images.githubusercontent.com/82735837/224729619-7573b764-7c72-4e02-aead-4351639b94bb.png)
+
+### Crear una agenda
+
+![image](https://user-images.githubusercontent.com/82735837/224730034-96bde2e2-53d2-4fdb-acf7-73a6b540c0b7.png)
+
+### Crear disponibilidad Horaria de un dia
+
+![image](https://user-images.githubusercontent.com/82735837/224730352-79b48e51-daca-4fcc-9133-b9dc26c578f4.png)
+
+### AgregarCita
+![image](https://user-images.githubusercontent.com/82735837/224731603-b182a51e-e871-45a5-9c53-a6e9ba0615dc.png)
+
+
+
