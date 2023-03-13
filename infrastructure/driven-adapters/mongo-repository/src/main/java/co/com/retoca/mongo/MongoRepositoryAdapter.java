@@ -1,5 +1,6 @@
 package co.com.retoca.mongo;
 
+import co.com.retoca.model.agenda.Dia;
 import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.events.CitaAgregada;
@@ -18,6 +19,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.function.Function;
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
@@ -69,11 +71,17 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
     }
 
     @Override
-    public Mono<DomainEvent> findDyFecha(String id, String oldValue, String newValue) {
+    public Mono<DiaAgregado> findDyFecha(String id, String oldValue, String newValue) {
         Query query = new Query(Criteria.where("diaId").is(id).and("disponibilidadHorarias").is(oldValue));
         Update update = new Update().set("disponibilidadHorarias.$", newValue);
-        return template.findAndModify(query, update, options().returnNew(true),
-                DomainEvent.class,"diaAgregado");
+        try {
+            return template.findAndModify(query, update, options().returnNew(true), DiaAgregado.class, "diaAgregado").map(diaAgregado -> {
+                System.out.println(diaAgregado);
+                return diaAgregado;
+            } );
+        } catch (Exception e) {
+            throw new RuntimeException("No se encontró ningún objeto con el índice '$' en la base de datos.", e);
+        }
     }
 
     @Override
@@ -81,6 +89,13 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
         var query = new Query(Criteria.where("aggregateRootId").is(aggregateRootId));
         return template.find(query,StoredEvent.class).sort(Comparator.comparing(event -> event.getOccurredOn()))
                 .map(storeEvent -> storeEvent.deserializeEvent(eventSerializer));
+    }
+
+    @Override
+    public Flux<DiaAgregado> VerAgenda(String aggregateRootId) {
+        var query = new Query(Criteria.where("aggregateRootId").is(aggregateRootId));
+        return template.find(query, DiaAgregado.class);
+
     }
 
 

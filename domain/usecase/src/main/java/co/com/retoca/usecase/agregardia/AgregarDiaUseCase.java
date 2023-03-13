@@ -37,9 +37,9 @@ public class AgregarDiaUseCase  extends UseCaseForCommand<AgregarDiaCommand> {
                     bus.publish(event);
                     return event;
                 }).flatMap(event ->{
-                    return repository.saveEvent(event);
-                }).flatMap(event -> {
                     return repository.save(event);
+                }).flatMap(event -> {
+                    return repository.saveEvent(event);
                 })
         );
     }

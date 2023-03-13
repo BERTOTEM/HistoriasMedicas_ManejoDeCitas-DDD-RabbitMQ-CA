@@ -1,5 +1,6 @@
 package co.com.retoca.api;
 
+import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.Paciente;
 import co.com.retoca.model.paciente.events.CitaAgregada;
@@ -10,6 +11,7 @@ import co.com.retoca.usecase.crearagenda.CrearAgendaUseCase;
 import co.com.retoca.usecase.crearpaciente.CrearPacienteUseCase;
 import co.com.retoca.usecase.generic.commands.*;
 import co.com.retoca.usecase.historialpaciente.HistorialPacienteUseCase;
+import co.com.retoca.usecase.veragenda.VerAgendaUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -88,6 +90,17 @@ public class RestController {
                         .body(BodyInserters.fromPublisher(historialPacienteUseCase
                                         .apply(request.pathVariable("aggregateRootId")),
                                 DomainEvent.class))
+        );
+    }
+
+    @Bean
+    public RouterFunction<ServerResponse> ObtenerAgenda(VerAgendaUseCase verAgendaUseCase){
+
+        return route( GET("/Agenda/{aggregateRootId}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(verAgendaUseCase
+                                        .apply(request.pathVariable("aggregateRootId")),
+                                DiaAgregado.class))
         );
     }
 }

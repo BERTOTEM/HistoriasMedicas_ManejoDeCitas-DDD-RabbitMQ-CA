@@ -48,7 +48,7 @@ public class AgregarCitaUseCase extends UseCaseForCommand<AgregarCitaCommand> {
                                             } else {
                                                 return Mono.error(new RuntimeException("hora no disponible"));
                                             }
-                                        }).retry(2).onErrorResume(eroor -> Flux.empty());
+                                        });
                             });
                 });
     }

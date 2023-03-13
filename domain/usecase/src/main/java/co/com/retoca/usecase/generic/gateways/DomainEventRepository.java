@@ -13,9 +13,10 @@ public interface DomainEventRepository {
     Mono<DomainEvent> saveEvent(DomainEvent event);
     Mono<DomainEvent>save(DomainEvent event);
     Mono<Boolean>esistsByFecha(String diaId);
-    Mono<DomainEvent> findDyFecha(String id, String oldValue, String newValue);
+    Mono<DiaAgregado> findDyFecha(String id, String oldValue, String newValue);
 
     Flux<DomainEvent>HistorialPaciente(String aggregateRootId);
+    Flux<DiaAgregado>VerAgenda(String aggregateRootId);
 
 
 }

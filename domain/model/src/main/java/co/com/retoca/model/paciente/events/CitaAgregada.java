@@ -48,4 +48,6 @@ public class CitaAgregada  extends DomainEvent {
                 ", hora='" + hora + '\'' +
                 '}';
     }
+
+
 }

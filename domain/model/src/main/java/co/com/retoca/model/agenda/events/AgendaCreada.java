@@ -28,4 +28,8 @@ public class AgendaCreada extends DomainEvent {
                 "semana=" + semana +
                 '}';
     }
+
+    public void setSemana(String semana) {
+        this.semana = semana;
+    }
 }
