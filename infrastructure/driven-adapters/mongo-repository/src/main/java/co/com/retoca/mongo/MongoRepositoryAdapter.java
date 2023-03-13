@@ -65,6 +65,11 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
     }
 
     @Override
+    public Mono<DiaAgregado> saveDia(DiaAgregado diaAgregado) {
+        return template.save(diaAgregado);
+    }
+
+    @Override
     public Mono<Boolean> esistsByFecha(String diaId) {
         var query = new Query(Criteria.where("diaId").is(diaId));
         return template.exists(query,"diaAgregado");

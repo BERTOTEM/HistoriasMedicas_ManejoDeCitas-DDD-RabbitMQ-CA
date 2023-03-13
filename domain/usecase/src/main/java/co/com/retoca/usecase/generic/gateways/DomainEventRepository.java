@@ -12,6 +12,7 @@ public interface DomainEventRepository {
     Mono<Boolean>existsById(String aggregateId);
     Mono<DomainEvent> saveEvent(DomainEvent event);
     Mono<DomainEvent>save(DomainEvent event);
+    Mono<DiaAgregado>saveDia(DiaAgregado diaAgregado);
     Mono<Boolean>esistsByFecha(String diaId);
     Mono<DiaAgregado> findDyFecha(String id, String oldValue, String newValue);
 

@@ -8,14 +8,11 @@ import reactor.core.publisher.Flux;
 
 
 public class VerAgendaUseCase {
-
     private final DomainEventRepository repository;
-
 
     public VerAgendaUseCase(DomainEventRepository repository) {
         this.repository = repository;
     }
-
     public Flux<DiaAgregado> apply(String name) {
         return repository.VerAgenda(name);
     }

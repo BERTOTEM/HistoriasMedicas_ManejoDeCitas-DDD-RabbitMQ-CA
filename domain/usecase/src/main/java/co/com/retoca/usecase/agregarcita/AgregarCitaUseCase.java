@@ -46,7 +46,7 @@ public class AgregarCitaUseCase extends UseCaseForCommand<AgregarCitaCommand> {
                                                         .flatMap(domainEvent -> repository.save(domainEvent))
                                                         .doOnNext(event -> bus.publish(event));
                                             } else {
-                                                return Mono.error(new RuntimeException("hora no disponible"));
+                                                return Mono.error(new RuntimeException("DIa no disponible"));
                                             }
                                         });
                             });
