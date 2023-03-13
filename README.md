@@ -65,5 +65,7 @@ https://app.diagrams.net/#G1Bk_sBeR1xxSRKNWdqDkcxZ6x1u0i56Oh
 ### AgregarCita
 ![image](https://user-images.githubusercontent.com/82735837/224731603-b182a51e-e871-45a5-9c53-a6e9ba0615dc.png)
 
+### HistorialPaciente
+![image](https://user-images.githubusercontent.com/82735837/224733862-72389a21-e137-4996-91f6-e79a6ed1f1c8.png)
 
 
