@@ -35,8 +35,7 @@ public class CrearAgendaUseCase extends UseCaseForCommand<CrearAgendaCommand> {
             return event;
         }).flatMap(event ->{
             return repository.saveEvent(event);
-        }).flatMap(event -> {
-            return repository.save(event);
         });
+                //.flatMap(event -> {return repository.save(event);});
     }
 }

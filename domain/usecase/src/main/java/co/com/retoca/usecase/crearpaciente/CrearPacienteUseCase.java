@@ -38,7 +38,6 @@ public class CrearPacienteUseCase extends UseCaseForCommand<CrearPacienteCommand
                                 );
                                 return Flux.fromIterable(paciente.getUncommittedChanges())
                                         .flatMap(event -> repository.saveEvent(event))
-                                        .flatMap(domainEvent -> repository.save(domainEvent))
                                         .doOnNext(event -> bus.publish(event));
                             }
                         }).onErrorResume(error ->Flux.empty())

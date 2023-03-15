@@ -1,5 +1,6 @@
 package co.com.retoca.usecase.agregarcita;
 
+import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.paciente.Paciente;
 import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.values.*;
@@ -30,7 +31,7 @@ public class AgregarCitaUseCase extends UseCaseForCommand<AgregarCitaCommand> {
                             .flatMapMany(events -> {
                                 return repository.esistsByFecha(agregarCitaCommand.getCitaId())
                                         .flatMapMany(existe -> {
-                                            System.out.println(existe);
+
                                             if (existe) {
                                                 Paciente paciente = Paciente.from(PacienteId.of(agregarCitaCommand.getPacienteId()), events);
                                                 paciente.agregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
@@ -43,7 +44,7 @@ public class AgregarCitaUseCase extends UseCaseForCommand<AgregarCitaCommand> {
                                                 return repository.findDyFecha(fecha, horaAnterior, horaNueva)
                                                         .thenMany(Flux.fromIterable(paciente.getUncommittedChanges()))
                                                         .flatMap(event -> repository.saveEvent(event))
-                                                        .flatMap(domainEvent -> repository.save(domainEvent))
+
                                                         .doOnNext(event -> bus.publish(event));
                                             } else {
                                                 return Mono.error(new RuntimeException("DIa no disponible"));

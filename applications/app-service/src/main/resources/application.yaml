@@ -3,6 +3,7 @@ server:
 spring:
   application:
     name: "AdministracionMedica"
+
   devtools:
     add-properties: false
   h2:

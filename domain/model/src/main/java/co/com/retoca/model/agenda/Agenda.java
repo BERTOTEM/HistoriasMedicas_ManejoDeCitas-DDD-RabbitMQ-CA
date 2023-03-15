@@ -35,13 +35,11 @@ public class Agenda  extends AggregateRoot<AgendaId> {
         return agenda;
     }
 
-    public  void agregarDia(DiaId diaId, List<DisponibilidadHoraria> disponibilidadHorarias){
+    public  void agregarDia(DiaId diaId, List<String> disponibilidadHorarias){
         Objects.requireNonNull(diaId);
         Objects.requireNonNull(disponibilidadHorarias);
-        List<String> disponibilidad = new ArrayList<String>();
-        for (DisponibilidadHoraria dh : disponibilidadHorarias) {
-            disponibilidad.add(dh.toString().substring(45,50));         }
-        appendChange(new DiaAgregado(diaId.value(), disponibilidad)).apply();
+
+        appendChange(new DiaAgregado(diaId.value(), disponibilidadHorarias)).apply();
     }
     public AgendaId getAgendaId() {
         return agendaId;

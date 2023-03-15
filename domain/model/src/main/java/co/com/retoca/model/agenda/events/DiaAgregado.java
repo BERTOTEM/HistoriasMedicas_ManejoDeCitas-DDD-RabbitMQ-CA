@@ -37,4 +37,6 @@ public class DiaAgregado extends DomainEvent {
     public void setDisponibilidadHorarias(List<String> disponibilidadHorarias) {
         this.disponibilidadHorarias = disponibilidadHorarias;
     }
+
+
 }

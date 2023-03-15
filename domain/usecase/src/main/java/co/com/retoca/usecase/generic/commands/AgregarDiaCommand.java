@@ -8,12 +8,12 @@ import java.util.List;
 public class AgregarDiaCommand extends Command {
     private String agendaID;
     private String diaId;
-    private List<DisponibilidadHoraria> disponibilidadHorarias;
+    private List<String> disponibilidadHorarias;
 
     public AgregarDiaCommand() {
     }
 
-    public AgregarDiaCommand(String agendaID, String diaId, List<DisponibilidadHoraria> disponibilidadHorarias) {
+    public AgregarDiaCommand(String agendaID, String diaId, List<String> disponibilidadHorarias) {
         this.agendaID = agendaID;
         this.diaId = diaId;
         this.disponibilidadHorarias = disponibilidadHorarias;
@@ -35,11 +35,11 @@ public class AgregarDiaCommand extends Command {
         this.diaId = diaId;
     }
 
-    public List<DisponibilidadHoraria> getDisponibilidadHorarias() {
+    public List<String> getDisponibilidadHorarias() {
         return disponibilidadHorarias;
     }
 
-    public void setDisponibilidadHorarias(List<DisponibilidadHoraria> disponibilidadHorarias) {
+    public void setDisponibilidadHorarias(List<String> disponibilidadHorarias) {
         this.disponibilidadHorarias = disponibilidadHorarias;
     }
 }
