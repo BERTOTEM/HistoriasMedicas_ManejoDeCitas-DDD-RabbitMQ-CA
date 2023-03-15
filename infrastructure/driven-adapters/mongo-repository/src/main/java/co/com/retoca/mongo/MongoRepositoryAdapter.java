@@ -65,6 +65,7 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
         AgregarDiaDocumentEntity entity = new AgregarDiaDocumentEntity(agregarDiaCommand);
         return template.insert(entity).map(AgregarDiaDocumentEntity::toDomain);
     }
+
     @Override
     public Mono<Boolean> esistsByFecha(String diaId) {
         var query = new Query(Criteria.where("diaId").is(diaId));

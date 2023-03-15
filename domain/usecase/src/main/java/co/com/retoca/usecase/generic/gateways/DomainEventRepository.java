@@ -16,9 +16,7 @@ public interface DomainEventRepository {
     Mono<AgregarDiaCommand>saveCommand(AgregarDiaCommand agregarDiaCommand);
     Mono<Boolean>esistsByFecha(String diaId);
     Mono<DiaAgregado> findDyFecha(String id, String oldValue, String newValue);
-
     Flux<DomainEvent>HistorialPaciente(String aggregateRootId);
-
     Flux<AgregarDiaCommand>VerAgenda3(String _id);
 
 

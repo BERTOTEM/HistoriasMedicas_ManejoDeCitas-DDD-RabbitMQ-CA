@@ -1,6 +1,7 @@
 package co.com.retoca.usecase.agregardia;
 
 import co.com.retoca.model.agenda.Agenda;
+import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.agenda.values.AgendaId;
 import co.com.retoca.model.agenda.values.DiaId;
 import co.com.retoca.model.agenda.values.DisponibilidadHoraria;
@@ -39,8 +40,10 @@ public class AgregarDiaUseCase  extends UseCaseForCommand<AgregarDiaCommand> {
                 }).map(event ->{
                     bus.publish(event);
                     return event;
-                }).flatMap(event -> {
+                }).flatMap(event ->{
                     return repository.saveEvent(event);
+                }).flatMap(event -> {
+                    return repository.saveDia((DiaAgregado) event);
                 })
         );
     }

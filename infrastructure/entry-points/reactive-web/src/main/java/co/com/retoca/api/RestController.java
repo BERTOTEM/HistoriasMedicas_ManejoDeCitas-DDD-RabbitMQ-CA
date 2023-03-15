@@ -1,5 +1,6 @@
 package co.com.retoca.api;
 
+import co.com.retoca.model.agenda.Dia;
 import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.Paciente;
