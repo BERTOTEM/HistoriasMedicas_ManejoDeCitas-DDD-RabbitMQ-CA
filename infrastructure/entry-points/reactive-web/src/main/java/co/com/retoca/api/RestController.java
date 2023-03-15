@@ -100,7 +100,7 @@ public class RestController {
                 request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
                         .body(BodyInserters.fromPublisher(verAgendaUseCase
                                         .apply(request.pathVariable("aggregateRootId")),
-                                DiaAgregado.class))
+                                AgregarDiaCommand.class))
         );
     }
 }

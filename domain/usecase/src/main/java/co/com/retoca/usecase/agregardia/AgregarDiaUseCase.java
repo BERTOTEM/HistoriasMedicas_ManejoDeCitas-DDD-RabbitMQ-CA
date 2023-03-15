@@ -13,6 +13,8 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.util.stream.Collectors;
+
 public class AgregarDiaUseCase  extends UseCaseForCommand<AgregarDiaCommand> {
 
     private final DomainEventRepository repository;
@@ -32,12 +34,11 @@ public class AgregarDiaUseCase  extends UseCaseForCommand<AgregarDiaCommand> {
                     Agenda agenda=Agenda.from(AgendaId.of(agregarDiaCommand.getAgendaID()),events);
                     agenda.agregarDia(DiaId.of(agregarDiaCommand.getDiaId()),
                             agregarDiaCommand.getDisponibilidadHorarias());
+                    repository.saveCommand(agregarDiaCommand).subscribe();
                     return agenda.getUncommittedChanges();
                 }).map(event ->{
                     bus.publish(event);
                     return event;
-                }).flatMap(event ->{
-                    return repository.save(event);
                 }).flatMap(event -> {
                     return repository.saveEvent(event);
                 })
