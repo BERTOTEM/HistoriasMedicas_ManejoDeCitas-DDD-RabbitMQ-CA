@@ -54,6 +54,10 @@ https://app.diagrams.net/#G1Bk_sBeR1xxSRKNWdqDkcxZ6x1u0i56Oh
 
 ![image](https://user-images.githubusercontent.com/82735837/224729619-7573b764-7c72-4e02-aead-4351639b94bb.png)
 
+### ActualizarPaciente
+
+![image](https://user-images.githubusercontent.com/82735837/225964082-e682d47b-f623-4387-93ab-3e303a1cc37e.png)
+
 ### Crear una agenda
 
 ![image](https://user-images.githubusercontent.com/82735837/224730034-96bde2e2-53d2-4fdb-acf7-73a6b540c0b7.png)
@@ -63,9 +67,25 @@ https://app.diagrams.net/#G1Bk_sBeR1xxSRKNWdqDkcxZ6x1u0i56Oh
 ![image](https://user-images.githubusercontent.com/82735837/224730352-79b48e51-daca-4fcc-9133-b9dc26c578f4.png)
 
 ### AgregarCita
-![image](https://user-images.githubusercontent.com/82735837/224731603-b182a51e-e871-45a5-9c53-a6e9ba0615dc.png)
+
+![image](https://user-images.githubusercontent.com/82735837/225963758-73985c7f-ad92-4b41-83c1-eef3235c0644.png)
+
+### CancelarCita
+
+![image](https://user-images.githubusercontent.com/82735837/225964840-ccaeb45a-efcb-49d8-981f-516b540427aa.png)
 
 ### HistorialPaciente
+
 ![image](https://user-images.githubusercontent.com/82735837/224733862-72389a21-e137-4996-91f6-e79a6ed1f1c8.png)
+
+### ListarAgenda
+
+![image](https://user-images.githubusercontent.com/82735837/225964612-dd5a3267-c6ee-4c85-b3ee-e7e0f270e862.png)
+
+### EliminarPaciente
+
+![image](https://user-images.githubusercontent.com/82735837/225965017-ec94c896-679d-47b6-8af1-978c39174d0c.png)
+
+
 
 
