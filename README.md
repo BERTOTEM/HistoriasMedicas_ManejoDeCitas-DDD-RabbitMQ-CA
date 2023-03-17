@@ -90,6 +90,9 @@ https://app.diagrams.net/#G1Bk_sBeR1xxSRKNWdqDkcxZ6x1u0i56Oh
 
 https://github.com/BERTOTEM/ConsumoRabbitEnvioCorreo.git
 
+## Autor y Versión
+- Julian Roberto Mazo Arroyave
+- 1.0.0
 
 
 
