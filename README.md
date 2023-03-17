@@ -86,6 +86,10 @@ https://app.diagrams.net/#G1Bk_sBeR1xxSRKNWdqDkcxZ6x1u0i56Oh
 
 ![image](https://user-images.githubusercontent.com/82735837/225965017-ec94c896-679d-47b6-8af1-978c39174d0c.png)
 
+# Api consume la cola de rabbit y envia correos
+
+https://github.com/BERTOTEM/ConsumoRabbitEnvioCorreo.git
+
 
 
 
