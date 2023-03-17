@@ -46,6 +46,22 @@ Este módulo es el más externo de la arquitectura, es el encargado de ensamblar
 
 **Los beans de los casos de uso se disponibilizan automaticamente gracias a un '@ComponentScan' ubicado en esta capa.**
 
+# Funcionalidades
+### El doctor Ramiro Fernandez nos contactó porque quiere adquirir un sistema para la administración de las historias médicas y el manejo de citas de sus pacientes. 
+### Por ello nosotros tenemos la tarea de realizar un sistema:
+
+
+- Que le permita al doctor establecer un horario de disponibilidad por día de la semana. ej (lunes 8am a 5pm, martes 9am a 3 pm ... ) 
+- Que le permita a el doctor agregar un paciente nuevo 
+- Que le permita al doctor modificar la información personal del paciente de ser necesario 
+- Agregar revisión de cita médica.
+- Que le permita a los pacientes que están inscritos  agendar citas pero sólo en los horarios disponibles, es decir deben ir saliendo de disponibilidad los horarios - que ya han sido tomados.(Hay que definir también cuanto toma cada cita como un estándar para saber qué franja horaria se va ocupando a medida que se van agendando - citas)
+- Que le permita al doctor cancelar las citas que se van agendando.(Si el doctor cancela la cita el horario debe volver a pasar a estar disponible)
+- Que le permita al doctor conocer el estado de su agenda de la semana actual.
+- Que le permita al doctor listar todo el historial médico de un  paciente con todas las interacciones que han tenido.
+- Por último que le permita eliminar paciente
+
+
 # Modelamiento Estrategico y Tactico
 https://app.diagrams.net/#G1Bk_sBeR1xxSRKNWdqDkcxZ6x1u0i56Oh
 
