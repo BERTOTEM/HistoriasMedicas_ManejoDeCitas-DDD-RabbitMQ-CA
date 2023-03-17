@@ -1,23 +1,21 @@
 package co.com.retoca.usecase.generic.commands;
 
-import co.com.retoca.model.paciente.values.CitaId;
-import co.com.retoca.model.paciente.values.RevisionDeCitaMedica;
 import co.com.retoca.usecase.generic.Command;
 
-public class AgregarCitaCommand  extends Command {
+public class ActualizarCitaCommand extends Command {
 
     private String pacienteId;
     private String citaId;
     private String revisionDeCitaMedica;
     private String duracion;
     private String hora   ;
-
     private String correo;
 
-    public AgregarCitaCommand() {
+
+    public ActualizarCitaCommand() {
     }
 
-    public AgregarCitaCommand(String pacienteId, String citaId, String revisionDeCitaMedica, String duracion, String hora,String correo) {
+    public ActualizarCitaCommand(String pacienteId, String citaId, String revisionDeCitaMedica, String duracion, String hora,String correo) {
         this.pacienteId = pacienteId;
         this.citaId = citaId;
         this.revisionDeCitaMedica = revisionDeCitaMedica;
@@ -34,14 +32,6 @@ public class AgregarCitaCommand  extends Command {
         this.pacienteId = pacienteId;
     }
 
-    public String getRevisionDeCitaMedica() {
-        return revisionDeCitaMedica;
-    }
-
-    public void setRevisionDeCitaMedica(String revisionDeCitaMedica) {
-        this.revisionDeCitaMedica = revisionDeCitaMedica;
-    }
-
     public String getCitaId() {
         return citaId;
     }
@@ -50,19 +40,31 @@ public class AgregarCitaCommand  extends Command {
         this.citaId = citaId;
     }
 
+    public String getRevisionDeCitaMedica() {
+        return revisionDeCitaMedica;
+    }
+
+    public void setRevisionDeCitaMedica(String revisionDeCitaMedica) {
+        this.revisionDeCitaMedica = revisionDeCitaMedica;
+    }
+
     public String getDuracion() {
         return duracion;
+    }
+
+    public void setDuracion(String duracion) {
+        this.duracion = duracion;
     }
 
     public String getHora() {
         return hora;
     }
 
-    public String getCorreo() {
-        return correo;
+    public void setHora(String hora) {
+        this.hora = hora;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public String getCorreo() {
+        return correo;
     }
 }

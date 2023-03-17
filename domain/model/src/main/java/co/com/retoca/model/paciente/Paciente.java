@@ -1,10 +1,7 @@
 package co.com.retoca.model.paciente;
 
 
-import co.com.retoca.model.paciente.events.CitaAgregada;
-import co.com.retoca.model.paciente.events.PacienteActualizado;
-import co.com.retoca.model.paciente.events.PacienteCreado;
-import co.com.retoca.model.paciente.events.PacienteEliminado;
+import co.com.retoca.model.paciente.events.*;
 import co.com.retoca.model.generic.AggregateRoot;
 import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.values.*;
@@ -38,12 +35,13 @@ public class Paciente extends AggregateRoot<PacienteId> {
 
 
 
-    public  void agregarCita(CitaId citaId,RevisionDeCitaMedica revisionDeCitaMedica,Duracion duracion,Hora hora){
+    public  void agregarCita(CitaId citaId,RevisionDeCitaMedica revisionDeCitaMedica,Duracion duracion,Hora hora,Correo correo){
         Objects.requireNonNull(citaId);
         Objects.requireNonNull(revisionDeCitaMedica);
         Objects.requireNonNull(duracion);
         Objects.requireNonNull(hora);
-        appendChange(new CitaAgregada(citaId.value(),revisionDeCitaMedica.value(),duracion.value(),hora.value())).apply();
+        Objects.requireNonNull(correo);
+        appendChange(new CitaAgregada(citaId.value(),revisionDeCitaMedica.value(),duracion.value(),hora.value(),correo.value())).apply();
 
     }
 
@@ -55,6 +53,17 @@ public class Paciente extends AggregateRoot<PacienteId> {
         Objects.requireNonNull(edad);
         appendChange(new PacienteActualizado(pacienteId.value(),correo.value(),nombre.value(),telefono.value(),edad.value())).apply();
     }
+    public  void actualizarCita(CitaId citaId,RevisionDeCitaMedica revisionDeCitaMedica,Duracion duracion,Hora hora,Correo correo){
+        Objects.requireNonNull(citaId);
+        Objects.requireNonNull(revisionDeCitaMedica);
+        Objects.requireNonNull(duracion);
+        Objects.requireNonNull(hora);
+        Objects.requireNonNull(correo);
+        appendChange(new CitaActualizada(citaId.value(),revisionDeCitaMedica.value(),duracion.value(),hora.value(),correo.value())).apply();
+
+    }
+
+
 
     public void eliminarPaciente(PacienteId pacienteId){
         Objects.requireNonNull(pacienteId);
@@ -79,6 +88,10 @@ public class Paciente extends AggregateRoot<PacienteId> {
 
     public Edad getEdad() {
         return edad;
+    }
+
+    public List<Cita> getCita() {
+        return cita;
     }
 }
 

@@ -1,9 +1,6 @@
 package co.com.retoca.model.paciente;
 
-import co.com.retoca.model.paciente.events.CitaAgregada;
-import co.com.retoca.model.paciente.events.PacienteActualizado;
-import co.com.retoca.model.paciente.events.PacienteCreado;
-import co.com.retoca.model.paciente.events.PacienteEliminado;
+import co.com.retoca.model.paciente.events.*;
 import co.com.retoca.model.generic.EventChange;
 import co.com.retoca.model.paciente.values.*;
 
@@ -23,7 +20,8 @@ public class PacienteChange extends EventChange {
             Cita cita =new Cita(CitaId.of(event.getCitaId()),
                     new RevisionDeCitaMedica(event.getRevisionDeCitaMedica()),
                     new Duracion(event.getDuracion()),
-                    new Hora(event.getHora()));
+                    new Hora(event.getHora()),
+                    new Correo(event.getCorreo()));
             paciente.cita.add(cita);
         });
         apply((PacienteActualizado event)->{
@@ -33,9 +31,19 @@ public class PacienteChange extends EventChange {
             paciente.telefono=paciente.getTelefono();
             paciente.edad=paciente.getEdad();
         });
+        apply((CitaActualizada event)->{
+            Cita cita2 =new Cita(CitaId.of(event.getCitaId()),
+                    new RevisionDeCitaMedica(event.getRevisionDeCitaMedica()),
+                    new Duracion(event.getDuracion()),
+                    new Hora(event.getHora()),
+                    new Correo(event.getCorreo()));
+            paciente.cita= new ArrayList<>();
+            paciente.cita.add(cita2);
+        });
        apply((PacienteEliminado event)->{
 
         });
+
 
     }
 

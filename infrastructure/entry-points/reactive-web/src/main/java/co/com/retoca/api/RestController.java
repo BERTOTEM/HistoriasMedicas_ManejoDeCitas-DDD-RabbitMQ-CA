@@ -5,11 +5,13 @@ import co.com.retoca.model.agenda.events.DiaAgregado;
 import co.com.retoca.model.generic.DomainEvent;
 import co.com.retoca.model.paciente.Paciente;
 import co.com.retoca.model.paciente.events.CitaAgregada;
+import co.com.retoca.usecase.actualizarcita.ActualizarcitaUseCase;
 import co.com.retoca.usecase.actualizarpaciente.ActualizarPacienteUseCase;
 import co.com.retoca.usecase.agregarcita.AgregarCitaUseCase;
 import co.com.retoca.usecase.agregardia.AgregarDiaUseCase;
 import co.com.retoca.usecase.crearagenda.CrearAgendaUseCase;
 import co.com.retoca.usecase.crearpaciente.CrearPacienteUseCase;
+import co.com.retoca.usecase.eliminarpaceinte.EliminarPaceinteUseCase;
 import co.com.retoca.usecase.generic.commands.*;
 import co.com.retoca.usecase.historialpaciente.HistorialPacienteUseCase;
 import co.com.retoca.usecase.veragenda.VerAgendaUseCase;
@@ -59,6 +61,17 @@ public class RestController {
                                 DomainEvent.class))
         );
     }
+    @Bean
+    public RouterFunction<ServerResponse> cancelaCita(ActualizarcitaUseCase actualizarcitaUseCase){
+
+        return route(
+                PUT("/cancelar/cita").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(actualizarcitaUseCase
+                                        .apply(request.bodyToMono(ActualizarCitaCommand.class)),
+                                DomainEvent.class))
+        );
+    }
 
     @Bean
     public RouterFunction<ServerResponse> crearAgenda(CrearAgendaUseCase crearAgendaUseCase){
@@ -102,6 +115,15 @@ public class RestController {
                         .body(BodyInserters.fromPublisher(verAgendaUseCase
                                         .apply(request.pathVariable("aggregateRootId")),
                                 AgregarDiaCommand.class))
+        );
+    }
+    @Bean
+    public RouterFunction<ServerResponse> delete(EliminarPaceinteUseCase eliminarPaceinteUseCase) {
+        return route(
+                DELETE("/delete/{id}").and(accept(MediaType.APPLICATION_JSON)),
+                request -> ServerResponse.accepted()
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(BodyInserters.fromPublisher(eliminarPaceinteUseCase.apply(request.pathVariable("id")), Void.class))
         );
     }
 }

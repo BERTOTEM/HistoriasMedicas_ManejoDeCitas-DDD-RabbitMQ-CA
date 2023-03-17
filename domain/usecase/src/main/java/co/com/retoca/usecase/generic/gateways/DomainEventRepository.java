@@ -11,6 +11,7 @@ import reactor.core.publisher.Mono;
 
 public interface DomainEventRepository {
     Flux<DomainEvent> findById(String aggregateId);
+    Mono<Void> DeleteById(String aggregateId);
     Mono<Boolean>existsById(String aggregateId);
     Mono<DomainEvent> saveEvent(DomainEvent event);
     Mono<AgregarDiaCommand>saveCommand(AgregarDiaCommand agregarDiaCommand);

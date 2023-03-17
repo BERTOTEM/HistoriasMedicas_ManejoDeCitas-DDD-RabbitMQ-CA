@@ -14,8 +14,8 @@ public class HistorialPacienteUseCase {
         this.repository = repository;
     }
 
-    public Flux<DomainEvent> apply(String name) {
-        return repository.HistorialPaciente(name);
+    public Flux<DomainEvent> apply(String aggregateRootId) {
+        return repository.HistorialPaciente(aggregateRootId);
     }
 
 }

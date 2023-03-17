@@ -2,8 +2,7 @@ package co.com.retoca.model.paciente.events;
 
 import co.com.retoca.model.generic.DomainEvent;
 
-public class CitaAgregada  extends DomainEvent {
-
+public class CitaActualizada extends DomainEvent {
 
     private String citaId;
     private String revisionDeCitaMedica;
@@ -12,12 +11,12 @@ public class CitaAgregada  extends DomainEvent {
     private String hora   ;
     private String correo   ;
 
-    public CitaAgregada() {
-        super("mazo.julian.CitaAgregada");
+    public CitaActualizada() {
+        super("mazo.julian.CitaActualizada");
     }
 
-    public CitaAgregada(String citaId, String revisionDeCitaMedica, String duracion, String hora,String correo ) {
-        super("mazo.julian.CitaAgregada");
+    public CitaActualizada(String citaId, String revisionDeCitaMedica, String duracion, String hora, String correo) {
+        super("mazo.julian.CitaActualizada");
         this.citaId = citaId;
         this.revisionDeCitaMedica = revisionDeCitaMedica;
         this.duracion = duracion;
@@ -47,7 +46,7 @@ public class CitaAgregada  extends DomainEvent {
 
     @Override
     public String toString() {
-        return "CitaAgregada{" +
+        return "CitaActualizada{" +
                 "citaId='" + citaId + '\'' +
                 ", revisionDeCitaMedica='" + revisionDeCitaMedica + '\'' +
                 ", duracion='" + duracion + '\'' +

@@ -31,26 +31,28 @@ public class AgregarCitaUseCase extends UseCaseForCommand<AgregarCitaCommand> {
                             .flatMapMany(events -> {
                                 return repository.esistsByFecha(agregarCitaCommand.getCitaId())
                                         .flatMapMany(existe -> {
-
                                             if (existe) {
                                                 Paciente paciente = Paciente.from(PacienteId.of(agregarCitaCommand.getPacienteId()), events);
                                                 paciente.agregarCita(CitaId.of(agregarCitaCommand.getCitaId()),
                                                         new RevisionDeCitaMedica(agregarCitaCommand.getRevisionDeCitaMedica()),
                                                         new Duracion(agregarCitaCommand.getDuracion()),
-                                                        new Hora(agregarCitaCommand.getHora()));
+                                                        new Hora(agregarCitaCommand.getHora()),
+                                                new Correo(agregarCitaCommand.getCorreo()));
                                                 String fecha = agregarCitaCommand.getCitaId();
                                                 String horaAnterior = agregarCitaCommand.getHora();
                                                 String horaNueva = agregarCitaCommand.getHora() + " Reservado por: " + agregarCitaCommand.getPacienteId();
                                                 return repository.findDyFecha(fecha, horaAnterior, horaNueva)
-                                                        .thenMany(Flux.fromIterable(paciente.getUncommittedChanges()))
-                                                        .flatMap(event -> repository.saveEvent(event))
-
-                                                        .doOnNext(event -> bus.publish(event));
+                                                        .flatMapMany(diaAgregado -> {
+                                                            return Flux.fromIterable(paciente.getUncommittedChanges())
+                                                                    .flatMap(event -> repository.saveEvent(event))
+                                                                    .doOnNext(event -> bus.publish(event));
+                                                        })
+                                                        .switchIfEmpty(Mono.error(new RuntimeException("Horario ya reservado")));
                                             } else {
                                                 return Mono.error(new RuntimeException("DIa no disponible"));
                                             }
                                         });
-                            });
+                            }).onErrorResume(error ->Flux.empty());
                 });
     }
 }

@@ -26,7 +26,9 @@ public class RabbitMqEventBus implements EventBus {
     public void publish(DomainEvent event) {
         var notification = new Notification(
                 event.getClass().getTypeName(),
-                serializer.writeToJson(event)
+                serializer.writeToJson(event),
+                event.aggregateRootId()
+
         );
         LOGGER.info(String.format("Message sent -> %s", event.toString()));
         rabbitTemplate.convertAndSend(

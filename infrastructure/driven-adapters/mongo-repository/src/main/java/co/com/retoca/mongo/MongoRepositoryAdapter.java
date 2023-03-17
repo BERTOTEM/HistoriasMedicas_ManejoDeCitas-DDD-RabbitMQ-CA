@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.Comparator;
 import java.util.Date;
-import java.util.function.Function;
+
 
 import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
 
@@ -40,6 +40,13 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
                 .sort(Comparator.comparing(event -> event.getOccurredOn()))
                 .map(storeEvent -> storeEvent.deserializeEvent(eventSerializer));
     }
+
+    @Override
+    public Mono<Void> DeleteById(String aggregateId) {
+        var query = new Query(Criteria.where("aggregateRootId").is(aggregateId));
+        return template.remove(query, StoredEvent.class,"storedEvent").then();
+    }
+
     @Override
     public Mono<Boolean> existsById(String aggregateId) {
         var query = new Query(Criteria.where("aggregateRootId").is(aggregateId));
@@ -55,11 +62,6 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
         return template.save(eventStored)
                 .map(storeEvent -> storeEvent.deserializeEvent(eventSerializer));
     }
-    @Override
-    public Mono<DomainEvent> save(DomainEvent event) {
-        return template.save(event);
-    }
-
     @Override
     public Mono<AgregarDiaCommand> saveCommand(AgregarDiaCommand agregarDiaCommand) {
         AgregarDiaDocumentEntity entity = new AgregarDiaDocumentEntity(agregarDiaCommand);
@@ -77,7 +79,6 @@ public class MongoRepositoryAdapter implements DomainEventRepository{
         Update update = new Update().set("disponibilidadHorarias.$", newValue);
         try {
             return template.findAndModify(query, update, options().returnNew(true), DiaAgregado.class, "diaAgregado").map(diaAgregado -> {
-                System.out.println(diaAgregado);
                 return diaAgregado;
             } );
         } catch (Exception e) {

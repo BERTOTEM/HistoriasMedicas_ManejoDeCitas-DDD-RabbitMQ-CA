@@ -29,7 +29,8 @@ public class AgregarDiaUseCase  extends UseCaseForCommand<AgregarDiaCommand> {
 
     @Override
     public Flux<DomainEvent> apply(Mono<AgregarDiaCommand> agregarDiaCommandMono) {
-        return agregarDiaCommandMono.flatMapMany(agregarDiaCommand -> repository.findById(agregarDiaCommand.getAgendaID())
+        return agregarDiaCommandMono.flatMapMany(agregarDiaCommand ->
+                repository.findById(agregarDiaCommand.getAgendaID())
                 .collectList()
                 .flatMapIterable(events ->{
                     Agenda agenda=Agenda.from(AgendaId.of(agregarDiaCommand.getAgendaID()),events);
@@ -42,8 +43,6 @@ public class AgregarDiaUseCase  extends UseCaseForCommand<AgregarDiaCommand> {
                     return event;
                 }).flatMap(event ->{
                     return repository.saveEvent(event);
-                }).flatMap(event -> {
-                    return repository.saveDia((DiaAgregado) event);
                 })
         );
     }
